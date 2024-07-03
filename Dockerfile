@@ -1,17 +1,33 @@
-# Use the official Python image as the base image
-FROM python:3.11
+# Utilisez l'image de base Python
+FROM python:3.9
 
-# Set the working directory in the container
+# Installer les dépendances nécessaires pour PyMuPDF
+RUN apt-get update && apt-get install -y \
+    gcc \
+    build-essential \
+    libmupdf-dev \
+    mupdf-tools \
+    libfreetype6-dev \
+    libjpeg-dev \
+    libopenjp2-7-dev \
+    libtiff5-dev \
+    libmujs-dev \
+    python3-dev
+
+# Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copy the local code to the container
-COPY . /app
+# Copiez le fichier requirements.txt dans le conteneur
+COPY requirements.txt .
 
-# Install dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
+# Installez les dépendances Python
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port that FastAPI will run on
+# Copiez le code source de l'application dans le conteneur
+COPY . .
+
+# Exposez le port sur lequel l'application s'exécute
 EXPOSE 8000
 
-# Command to run the application using uvicorn
+# Commande pour exécuter l'application avec uvicorn
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
