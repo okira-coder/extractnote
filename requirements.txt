@@ -1,3 +1,4 @@
 Flask==2.0.1
 PyMuPDF==1.18.16
 uvicorn==0.15.0
+hypercorn==0.12.0

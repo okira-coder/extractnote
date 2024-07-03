@@ -29,5 +29,5 @@ COPY . .
 # Exposez le port sur lequel l'application s'exécute
 EXPOSE 8000
 
-# Commande pour exécuter l'application avec uvicorn
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Commande pour exécuter l'application avec Hypercorn
+CMD ["hypercorn", "app:app", "--bind", "0.0.0.0:8000"]
